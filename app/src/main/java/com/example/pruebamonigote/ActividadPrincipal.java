@@ -52,7 +52,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nav_actividad_principal);
+        setContentView(R.layout.actividad_principal);
         actividadPrincipal = this;
 
         //en caso de venir de la actividad registrarse, hay que cerrarla
@@ -88,48 +88,6 @@ public class ActividadPrincipal extends AppCompatActivity {
             DialogoCrearRutina dR = new DialogoCrearRutina();
             dR.onCreateDialog(this, user);
         }
-
-        /*********************************************************
-         *                   NAVIGATION DRAWER
-         *********************************************************/
-        setSupportActionBar(findViewById(R.id.labarra));
-        getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_more);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // inicializar la cabecera del drawer con los datos del usuario
-        NavigationView navigationView = findViewById(R.id.elnavigationview);
-        View headerView = navigationView.getHeaderView(0);
-        TextView username = headerView.findViewById(R.id.username);
-        username.setText("Hola, "+user);
-        ImageView fotoperfil = headerView.findViewById(R.id.fotoperfil);
-        fotoperfil.setBackgroundResource(R.drawable.benchpress);
-
-
-        elmenudesplegable = findViewById(R.id.drawer_layout);
-        NavigationView elnavigation = findViewById(R.id.elnavigationview);
-        elnavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.rutinas:
-                        finish();
-                        Intent i1 = new Intent(a, ActividadPrincipal.class);
-                        i1.putExtra("user",user);
-                        startActivity(i1);
-                        break;
-                    case R.id.perfil:
-                        break;
-                    case R.id.gimnasios:
-                        finish();
-                        Intent i3 = new Intent(a, ActividadMapaGimnasios.class);
-                        i3.putExtra("user",user);
-                        startActivity(i3);
-                        break;
-                }
-                elmenudesplegable.closeDrawers();
-                return false;
-            }
-        });
 
     }
 
@@ -178,33 +136,6 @@ public class ActividadPrincipal extends AppCompatActivity {
         GestorIdiomas.guardarPreferencias(c,a);
         a.finish();
         a.startActivity(a.getIntent());
-    }
-
-    /*********************************************************
-     *                   NAVIGATION DRAWER
-     *********************************************************/
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                elmenudesplegable.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (elmenudesplegable.isDrawerOpen(GravityCompat.START)) {
-            elmenudesplegable.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.opcionesdrawer,menu);
-        return true;
     }
 }
 
